@@ -39,7 +39,7 @@ function init()
 
     bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, 8*Math.pow(3, 8), gl.STATIC_DRAW );
+    gl.bufferData( gl.ARRAY_BUFFER, 8*Math.pow(3, 12), gl.STATIC_DRAW );
 
 
 
@@ -123,9 +123,9 @@ window.onload = init;
 function render()
 {
     var vertices = [
-        vec2( -0.86, -0.5 ),
+        vec2( -0.86602540378443864676372317075294, -0.5 ),
         vec2(  0,  1 ),
-        vec2(  0.86, -0.5 )
+        vec2(  0.86602540378443864676372317075294, -0.5 )
     ];
     points = [];
     divideTriangle( vertices[0], vertices[1], vertices[2],
