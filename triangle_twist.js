@@ -123,9 +123,9 @@ window.onload = init;
 function render()
 {
     var vertices = [
-        vec2( -0.6, -0.6 ),
-        vec2(  0,  0.6 ),
-        vec2(  0.6, -0.6 )
+        vec2( -0.86, -0.5 ),
+        vec2(  0,  1 ),
+        vec2(  0.86, -0.5 )
     ];
     points = [];
     divideTriangle( vertices[0], vertices[1], vertices[2],
