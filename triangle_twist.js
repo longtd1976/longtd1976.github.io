@@ -67,7 +67,7 @@ function triangle( a, b, c )
     var x = a[0];
     var y = a[1];
     var distance = Math.sqrt(x*x+y*y);
-    var distance = 1;
+    //var distance = 1;
     var sinT = Math.sin(distance*angleToRotate);
     var cosT = Math.cos(distance*angleToRotate);
     a[0] = x*cosT - y*sinT;
@@ -75,7 +75,7 @@ function triangle( a, b, c )
     x = b[0];
     y = b[1];
     distance = Math.sqrt(x*x+y*y);
-    distance = 1;
+    //distance = 1;
     sinT = Math.sin(distance*angleToRotate);
     cosT = Math.cos(distance*angleToRotate);
     b[0] = x*cosT - y*sinT;
@@ -83,7 +83,7 @@ function triangle( a, b, c )
     x = c[0];
     y = c[1];
     distance = Math.sqrt(x*x+y*y);
-    distance = 1;
+    //distance = 1;
     sinT = Math.sin(distance*angleToRotate);
     cosT = Math.cos(distance*angleToRotate);
     c[0] = x*cosT - y*sinT;
