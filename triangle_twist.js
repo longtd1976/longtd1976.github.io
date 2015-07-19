@@ -8,7 +8,7 @@ var gl;
         vec2(0,1),
         vec2(1,-1)
       ]
-divideTriangle(vertices[0], vertice[1], vertice[2], DivNum);
+divideTriangle(vertices[0], vertices[1], vertices[2], DivNum);
 
 window.onload = function init()
 {
