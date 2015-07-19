@@ -5,7 +5,7 @@ var gl;
 
 var points = [];
 
-var numTimesToSubdivide = 5;
+var numTimesToSubdivide = 1;
 var angleToRotate = 0.0;
 
 var bufferId;
@@ -64,9 +64,9 @@ function init()
 function rotate(vertex)
 {
 	var result = vec2(0.0, 0.0);
-	var twistFactor = angleToRotate*Math.sqrt(vertex[0]*vertex[0] + vertex[1]*vertex[1]);
-	result[0] = vertex[0]*Math.cos(twistFactor) - 	vertex[1]*Math.sin(twistFactor);
-	result[1] = vertex[0]*Math.sin(twistFactor) + vertex[1]*Math.cos(twistFactor);
+	var rotateFactor = angleToRotate*Math.sqrt(vertex[0]*vertex[0] + vertex[1]*vertex[1]);
+	result[0] = vertex[0]*Math.cos(rotateFactor) - vertex[1]*Math.sin(rotateFactor);
+	result[1] = vertex[0]*Math.sin(rotateFactor) + vertex[1]*Math.cos(rotateFactor);
 	return result
 }
 
@@ -80,7 +80,7 @@ function divideTriangle( a, b, c, count )
 
     // check for end of recursion
 
-    if ( count == 0 ) {
+    if ( count === 0 ) {
         triangle( a, b, c );
     }
     else {
