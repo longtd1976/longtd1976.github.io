@@ -57,7 +57,7 @@ function divideTriangle(a,b,c,count){
     divideTriangle(a,ab,ac,count-1);
     divideTriangle(c,ac,bc,count-1);
     divideTriangle(b,bc,ab,count-1);
-    divideTriangle(ab,bc,ac,count-1);
+    //divideTriangle(ab,bc,ac,count-1);
   }
 }
 function render() {
