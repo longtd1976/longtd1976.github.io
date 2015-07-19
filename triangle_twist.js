@@ -53,6 +53,10 @@ function init()
         numTimesToSubdivide = parseInt(event.target.value);
         render();
     };
+        document.getElementById("rotator").onchange = function(event) {
+        angleToRotate = parseInt(event.target.value)*Math.PI / 180.0;
+        render();
+    };
 
 
     render();
