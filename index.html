@@ -11,7 +11,17 @@ attribute vec4 vPosition;
 void
 main()
 {
-    gl_Position = vPosition;
+    //gl_Position = vPosition;
+    float theta = (90.0*3.14)/180.0;
+  float distanceFromOrigin = sqrt(vPosition.x * vPosition.x + vPosition.y * vPosition.y);
+  float s = sin( theta*distanceFromOrigin );
+    float c = cos( theta*distanceFromOrigin );
+  
+    
+     gl_Position.x = c * vPosition.x - s*vPosition.y;
+    gl_Position.y =  c * vPosition.x + s * vPosition.y;
+    gl_Position.z = 0.0;
+    gl_Position.w = 1.0;
 }
 </script>
 
