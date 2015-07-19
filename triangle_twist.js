@@ -58,36 +58,20 @@ function init()
         render();
     };
 
-
     render();
 };
 
+function rotate(vertex)
+{
+	var result = vec2(0.0, 0.0);
+	var twistFactor = angleToRotate*Math.sqrt(vertex[0]*vertex[0] + vertex[1]*vertex[1]);
+	result[0] = vertex[0]*Math.cos(twistFactor) - 	vertex[1]*Math.sin(twistFactor);
+	result[1] = vertex[0]*Math.sin(twistFactor) + vertex[1]*Math.cos(twistFactor);
+	return result
+}
+
 function triangle( a, b, c )
 {
-    var x = a[0];
-    var y = a[1];
-    var distance = Math.sqrt(x*x+y*y);
-    //var distance = 1;
-    var sinT = Math.sin(distance*angleToRotate);
-    var cosT = Math.cos(distance*angleToRotate);
-    a[0] = x*cosT - y*sinT;
-    a[1] = x*sinT + y*cosT;
-    x = b[0];
-    y = b[1];
-    distance = Math.sqrt(x*x+y*y);
-    //distance = 1;
-    sinT = Math.sin(distance*angleToRotate);
-    cosT = Math.cos(distance*angleToRotate);
-    b[0] = x*cosT - y*sinT;
-    b[1] = x*sinT + y*cosT;
-    x = c[0];
-    y = c[1];
-    distance = Math.sqrt(x*x+y*y);
-    //distance = 1;
-    sinT = Math.sin(distance*angleToRotate);
-    cosT = Math.cos(distance*angleToRotate);
-    c[0] = x*cosT - y*sinT;
-    c[1] = x*sinT + y*cosT;
     points.push( a, b, c );
 }
 
@@ -109,12 +93,11 @@ function divideTriangle( a, b, c, count )
 
         --count;
 
-        // three new triangles
-
-        divideTriangle( a, ab, ac, count );
-        divideTriangle( c, ac, bc, count );
-        divideTriangle( b, bc, ab, count );
-        divideTriangle( ac, bc, ab, count );
+        // 4 new triangles
+        divideTriangle( rotate(a), rotate(ab), rotate(ac), count );
+        divideTriangle( rotate(c), rotate(ac), rotate(bc), count );
+        divideTriangle( rotate(b), rotate(bc), rotate(ab), count );
+        divideTriangle( rotate(ac), rotate(bc), rotate(ab), count );
     }
 }
 
