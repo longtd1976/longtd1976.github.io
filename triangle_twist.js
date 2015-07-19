@@ -39,7 +39,7 @@ function init()
 
     bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, 8*Math.pow(3, 12), gl.STATIC_DRAW );
+    gl.bufferData( gl.ARRAY_BUFFER, 8*Math.pow(3, 15), gl.STATIC_DRAW );
 
 
 
