@@ -46,18 +46,6 @@ function triangle(a,b,c){
   points.push(a,b,c);
 }
 
-function rotate( p, theta) {
-    float d = sqrt(p[0]* p[0] + p[1] * p[1]);
-    float s = sin( theta*d );
-    float c = cos( theta*d );
-
-    float p0 = -s * p[0] + c * p[1];
-    float p1 =  s * p[1] + c * p[0];
-    
-    p[0] = p0;
-    p[1] = p1;
-}
-
 function divideTriangle(a,b,c,count){
   if(count == 0) {
     triangle(a,b,c);
