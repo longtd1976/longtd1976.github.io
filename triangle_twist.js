@@ -6,7 +6,7 @@ var gl;
 var points = [];
 
 var numTimesToSubdivide = 0;
-var angleToRotate = 0.5;
+var angleToRotate = 0.0;
 
 var bufferId;
 
@@ -120,9 +120,9 @@ window.onload = init;
 function render()
 {
     var vertices = [
-        vec2( -0.5, -0.5 ),
-        vec2(  0,  0.5 ),
-        vec2(  0.5, -0.5 )
+        vec2( -1, -1 ),
+        vec2(  0,  1 ),
+        vec2(  1, -1 )
     ];
     points = [];
     divideTriangle( vertices[0], vertices[1], vertices[2],
