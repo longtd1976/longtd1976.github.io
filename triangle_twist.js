@@ -2,7 +2,7 @@
 
 var gl;
     var points;
-    var DivNum = 5;
+    var DivNum = 3;
     var vertices = [
         vec2(-1,1),
         vec2(0,1),
