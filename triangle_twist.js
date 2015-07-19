@@ -2,7 +2,7 @@
 
 var gl;
     var points;
-    var DivNum = 3;
+    var DivNum = 7;
     var vertices = [
         vec2(-1,1),
         vec2(0,1),
@@ -47,7 +47,7 @@ function triangle(a,b,c){
 }
 
 function divideTriangle(a,b,c,count){
-  if(count === 0) {
+  if(count == 0) {
     triangle(a,b,c);
   } else {
     var ab = mix (a,b,0.5);
