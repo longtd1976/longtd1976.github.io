@@ -7,13 +7,13 @@ var points = [];
 
 var numTimesToSubdivide = 1;
 var angleToRotate = 0.0;
+var outline = false;
 
 var bufferId;
 
 function init()
 {
     canvas = document.getElementById( "gl-canvas" );
-
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
@@ -57,7 +57,20 @@ function init()
         angleToRotate = parseInt(event.target.value)*Math.PI / 180.0;
         render();
     };
-
+        document.getElementById("outline").onclick = function(event) {
+    		var wh = event.target.value;
+    		if (wh == "f") {
+    			outline = true;
+    			document.getElementById("outline").setAttribute("value","o");
+    			document.getElementById("outline").innerHTML = "View As Solid ";
+    		} else {
+    			outline = false;
+    			document.getElementById("outline").setAttribute("value","f");
+    			document.getElementById("outline").innerHTML = "View As Wiref.";
+    		}
+  		render();
+    }; 
+  
     render();
 };
 
@@ -75,13 +88,22 @@ function triangle( a, b, c )
     points.push( a, b, c );
 }
 
+function line( a, b, c )
+{
+    points.push(a, b, a, c, b, c);
+}
+
 function divideTriangle( a, b, c, count )
 {
 
     // check for end of recursion
 
     if ( count === 0 ) {
-        triangle( a, b, c );
+        if(outline) {
+          line(a,b,c);  
+        } else {
+          triangle( a, b, c );
+        }
     }
     else {
 
@@ -116,7 +138,10 @@ function render()
 
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
     gl.clear( gl.COLOR_BUFFER_BIT );
-    gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    if(outline){
+      gl.drawArrays( gl.LINES,0, points.length);
+    } else {
+      gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    }
     points = [];
-    //requestAnimFrame(render);
 }
