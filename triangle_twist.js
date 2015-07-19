@@ -6,6 +6,7 @@ var gl;
 var points = [];
 
 var numTimesToSubdivide = 0;
+var angleToRotate = 0.5;
 
 var bufferId;
 
@@ -59,6 +60,20 @@ function init()
 
 function triangle( a, b, c )
 {
+    var x = a[0];
+    var y = a[1];
+    var sinT = Math.sin(angleToRotate);
+    var cosT = Math.cos(angleToRotate)
+    a[0] = x*cosT - y*sinT;
+    a[1] = y*sinT + x*cosT;
+    x = b[0];
+    y = b[1];
+    b[0] = x*cosT - y*sinT;
+    b[1] = y*sinT + x*cosT;
+    x = c[0];
+    y = c[1];
+    c[0] = x*cosT - y*sinT;
+    c[1] = y*sinT + x*cosT;
     points.push( a, b, c );
 }
 
