@@ -5,7 +5,7 @@ var gl;
 
 var points = [];
 
-var numTimesToSubdivide = 0;
+var numTimesToSubdivide = 5;
 var angleToRotate = 0.0;
 
 var bufferId;
@@ -39,7 +39,7 @@ function init()
 
     bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, 8*Math.pow(3, 15), gl.STATIC_DRAW );
+    gl.bufferData( gl.ARRAY_BUFFER, 8*Math.pow(3, 7), gl.STATIC_DRAW );
 
 
 
