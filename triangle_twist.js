@@ -8,9 +8,15 @@ var points = [];
 var numTimesToSubdivide = 1;
 var angleToRotate = 0.0;
 var outline = false;
-
+var shape = "Triangle"; // Triangle, Square, Pentagons, Hexagons
 var bufferId;
 
+var vertices = [
+                vec2(0.0,1.0),
+                vec2(-0.86602540378443864676372317075294, -0.5 ),
+                vec2(0.86602540378443864676372317075294, -0.5 ),
+              ];
+    
 function init()
 {
     canvas = document.getElementById( "gl-canvas" );
@@ -70,7 +76,31 @@ function init()
     		}
   		render();
     }; 
-  
+    
+    document.getElementById("shape_select").onchange = function(event) {
+    		shape = event.target.value;
+        switch(shape) {
+          case "Triangle":
+              vertices = [
+                vec2(0.0,1.0),
+                vec2(-0.86602540378443864676372317075294, -0.5 ),
+                vec2(0.86602540378443864676372317075294, -0.5 ),
+              ];
+              break;
+          case "Square":
+              vertices = [
+                vec2(-0.70710678118654752440084436210485,0.70710678118654752440084436210485),
+                vec2(0.70710678118654752440084436210485,0.70710678118654752440084436210485),
+                vec2(0.70710678118654752440084436210485,-0.70710678118654752440084436210485),
+                vec2(-0.70710678118654752440084436210485,-0.70710678118654752440084436210485)
+              ];
+              break;
+          default:
+              break;
+      }
+  		render();
+    }; 
+      
     render();
 };
 
@@ -88,9 +118,19 @@ function triangle( a, b, c )
     points.push( a, b, c );
 }
 
-function line( a, b, c )
+function square(a, b, c, d)
+{
+    points.push( a, b, c, d, a, c );
+}
+
+function line_triangle( a, b, c )
 {
     points.push(a, b, a, c, b, c);
+}
+
+function line_square( a, b, c, d )
+{
+    points.push(a, b, b, c, c, d, d, a);
 }
 
 function divideTriangle( a, b, c, count )
@@ -100,7 +140,7 @@ function divideTriangle( a, b, c, count )
 
     if ( count === 0 ) {
         if(outline) {
-          line(a,b,c);  
+          line_triangle(a,b,c);  
         } else {
           triangle( a, b, c );
         }
@@ -123,25 +163,69 @@ function divideTriangle( a, b, c, count )
     }
 }
 
+function divideSquare( a, b, c, d, count )
+{
+
+    // check for end of recursion
+
+    if ( count === 0 ) {
+        if(outline) {
+          line_square(a,b,c,d);  
+        } else {
+          square( a, b, c, d );
+        }
+    }
+    else {
+
+        //bisect the sides
+
+        var ab = mix( a, b, 0.5 );
+        var bc = mix( b, c, 0.5 );
+        var cd = mix( c, d, 0.5 );
+        var da = mix( d, a, 0.5 );
+        var abcd = mix(ab, cd, 0.5);
+
+        --count;
+
+        // 4 new squares
+        divideSquare( rotate(a), rotate(ab), rotate(abcd), rotate(da), count );
+        divideSquare( rotate(da), rotate(abcd), rotate(cd), rotate(d), count );
+        divideSquare( rotate(ab), rotate(b), rotate(bc), rotate(abcd), count );
+        divideSquare( rotate(abcd), rotate(bc), rotate(c), rotate(cd), count );
+    }
+}
+
 window.onload = init;
 
 function render()
 {
-    var vertices = [
-        vec2( -0.86602540378443864676372317075294, -0.5 ),
-        vec2(  0,  1 ),
-        vec2(  0.86602540378443864676372317075294, -0.5 )
-    ];
     points = [];
-    divideTriangle( vertices[0], vertices[1], vertices[2],
+    switch(shape) {
+      case "Triangle":
+        divideTriangle( vertices[0], vertices[1], vertices[2],
                     numTimesToSubdivide);
 
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
-    gl.clear( gl.COLOR_BUFFER_BIT );
-    if(outline){
-      gl.drawArrays( gl.LINES,0, points.length);
-    } else {
-      gl.drawArrays( gl.TRIANGLES, 0, points.length );
-    }
-    points = [];
+        gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
+        gl.clear( gl.COLOR_BUFFER_BIT );
+        if(outline){
+          gl.drawArrays( gl.LINES,0, points.length);
+        } else {
+          gl.drawArrays( gl.TRIANGLES, 0, points.length );
+        }
+        points = [];
+        break;
+      case "Square":
+        divideSquare( vertices[0], vertices[1], vertices[2], vertices[3],
+                    numTimesToSubdivide);
+
+        gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
+        gl.clear( gl.COLOR_BUFFER_BIT );
+        if(outline){
+          gl.drawArrays( gl.LINES,0, points.length);
+        } else {
+          gl.drawArrays( gl.TRIANGLES, 0, points.length );
+        }
+        points = [];
+        break;
+      }
 }
