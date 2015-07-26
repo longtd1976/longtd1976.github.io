@@ -11,9 +11,9 @@ const black = vec4(0.0, 0.0, 0.0, 1.0);
 var segments=[];
 var points = [];
 var IsDrawing = false;
-var clRed = 0;
-var clGreen = 0;
-var clBlue = 0;
+var clRed = 10;
+var clGreen = 120;
+var clBlue = 200;
 
 function segment(points,color){
   this.points=points;      
@@ -56,16 +56,38 @@ window.onload = function init() {
     gl.enableVertexAttribArray( vPosition );
 
     render();
+    UpdateClRed(10);
+    UpdateClGreen(120);
+    UpdateClBlue(200);
+    PenWidthUpdate(3);
+    
 }
 
 function OnMouseReleased(){
   IsDrawing=false;
 }
 
+function toCanvasCoord(event) {
+  var x = event.clientX - canvas.offsetLeft + window.pageXOffset; 
+	var y = event.clientY - canvas.offsetTop + window.pageYOffset;
+  return vec2(-1 + 2 * x / canvas.width, -1 + 2 * (canvas.height - y) / canvas.height);
+}
+
 function OnMouseMove(event){
   if (IsDrawing) {
-    var t = toCanvasCoord(event);
-    draw(t);
+    var x1 = event.clientX - canvas.offsetLeft + window.pageXOffset + draw_pen_width/2; 
+	  var y1 = event.clientY - canvas.offsetTop + window.pageYOffset + draw_pen_width/2;
+    var x2 = event.clientX - canvas.offsetLeft + window.pageXOffset - draw_pen_width/2; 
+	  var y2 = event.clientY - canvas.offsetTop + window.pageYOffset - draw_pen_width/2;
+    var x3 = event.clientX - canvas.offsetLeft + window.pageXOffset + draw_pen_width/2; 
+	  var y3 = event.clientY - canvas.offsetTop + window.pageYOffset - draw_pen_width/2;
+    var x4 = event.clientX - canvas.offsetLeft + window.pageXOffset - draw_pen_width/2; 
+	  var y4 = event.clientY - canvas.offsetTop + window.pageYOffset + draw_pen_width/2;
+    //var t = toCanvasCoord(event);
+    draw(vec2(-1 + 2 * x1 / canvas.width, -1 + 2 * (canvas.height - y1) / canvas.height));
+    draw(vec2(-1 + 2 * x2 / canvas.width, -1 + 2 * (canvas.height - y2) / canvas.height));
+    draw(vec2(-1 + 2 * x3 / canvas.width, -1 + 2 * (canvas.height - y3) / canvas.height));
+    draw(vec2(-1 + 2 * x4 / canvas.width, -1 + 2 * (canvas.height - y4) / canvas.height));
   }
 }
 
@@ -73,23 +95,6 @@ function draw(point){
   var seg=segments[segments.length-1];
   var points=seg.points;
   points.push(point);  
-}
-
-function ClearCanvas() {
-  gl.clear( gl.COLOR_BUFFER_BIT );
-  points.length = 0;
-}
-function PenWidthUpdate(value){
-  draw_pen_width=value;  
-}
-function UpdateClRed(value){
-  clRed=value/255.0;
-}
-function UpdateClGreen(value){
-  clGreen=value/255.0;
-}
-function UpdateClBlue(value){
-  clBlue=value/255.0;  
 }
 
 function OnMousePressed(event){
@@ -103,25 +108,39 @@ function OnMousePressed(event){
  
 }
 
-function toCanvasCoord(event) {
-  var x = event.clientX - canvas.offsetLeft + window.pageXOffset; 
-	var y = event.clientY - canvas.offsetTop + window.pageYOffset;
-  return vec2(-1 + 2 * x / canvas.width, -1 + 2 * (canvas.height - y) / canvas.height);
-}
-
 function render() {
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.clear(gl.COLOR_BUFFER_BIT);  
   gl.uniform4fv(fColor, flatten(black));
   
   for (var i = 0; i < segments.length; i++) {
      var seg=segments[i];
      var points = seg.points;
      var col=vec4(seg.color[0],seg.color[1],seg.color[2],1.0);
+     //gl.lineWidth(draw_pen_width);
+     //gl.lineWidth(5);
      gl.uniform4fv(fColor, flatten(col));
      gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
      gl.bufferData( gl.ARRAY_BUFFER, flatten(points), gl.STATIC_DRAW );    
-     gl.drawArrays(gl.LINE_STRIP, 0, points.length);
-  }
-  
+     //gl.drawArrays(gl.LINE_STRIP, 0, points.length);
+     gl.drawArrays(gl.TRIANGLES, 0, points.length);
+  } 
   requestAnimFrame(render);
+}
+
+function ClearCanvas() {
+  gl.clear( gl.COLOR_BUFFER_BIT );  
+  gl.uniform4fv(fColor, flatten(black));
+  requestAnimFrame(render);
+}
+function PenWidthUpdate(value){
+  draw_pen_width=value;  
+}
+function UpdateClRed(value){
+  clRed=value/255.0;
+}
+function UpdateClGreen(value){
+  clGreen=value/255.0;
+}
+function UpdateClBlue(value){
+  clBlue=value/255.0;  
 }
