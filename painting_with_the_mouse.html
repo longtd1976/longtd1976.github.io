@@ -15,11 +15,11 @@
   
   <script id="fragment-shader" type="x-shader/x-fragment">
   precision mediump float;
-  
+  uniform vec4 fColor;
   void
   main()
   {
-      gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+      gl_FragColor = fColor;
   }
   </script>
   <script type="text/javascript" src="common/webgl-utils.js"></script>
@@ -28,11 +28,10 @@
   <script type="text/javascript" src="painting_with_the_mouse.js"></script>
 </head>
 <body>
-  <div>
-  <canvas id="gl-canvas" width="720" height="450" style="position:absolute;top:20%;left:10%;border:1px solid;cursor:crosshair;">
+  <canvas id="gl-canvas" width="720" height="450" style="border:1px solid;cursor:crosshair;">
   Oops ... your browser doesn't support the HTML5 canvas element
   </canvas>
-  </div>
+<br>
   <div>
   Pen width 1 <input id="pen_width" type="range"
    min="1" max="20" step="1" value="1" oninput="PenWidthUpdate(value)"/>
@@ -53,6 +52,6 @@
    min="0" max="255" step="1" value="200" oninput="UpdateClBlue(value)"/>
    255
   </div>
-  <input type="button" id="clear_canvas" class="control" value="Clear"></input><br />
+  <input type="button" id="clear_canvas" class="control" value="Clear"></input>
 </body>
 </html>
