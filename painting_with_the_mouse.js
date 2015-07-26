@@ -104,7 +104,9 @@ function OnMousePressed(event){
 }
 
 function toCanvasCoord(event) {
-  return vec2(-1 + 2 * event.clientX / canvas.width, -1 + 2 * (canvas.height - event.clientY) / canvas.height);
+  var x = event.clientX - canvas.offsetLeft + window.pageXOffset; 
+	var y = event.clientY - canvas.offsetTop + window.pageYOffset;
+  return vec2(-1 + 2 * x / canvas.width, -1 + 2 * (canvas.height - y) / canvas.height);
 }
 
 function render() {
