@@ -122,7 +122,7 @@ function render() {
      gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
      gl.bufferData( gl.ARRAY_BUFFER, flatten(points), gl.STATIC_DRAW );    
      //gl.drawArrays(gl.LINE_STRIP, 0, points.length);
-     gl.drawArrays(gl.TRIANGLES, 0, points.length);
+     gl.drawArrays(gl.TRIANGLE_STRIP, 0, points.length);
   } 
   requestAnimFrame(render);
 }
