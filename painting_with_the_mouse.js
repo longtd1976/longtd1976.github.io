@@ -1,21 +1,31 @@
 "use strict";
 
-var canvas, ctx, flag = false,
-    prevX = 0,
-    currX = 0,
-    prevY = 0,
-    currY = 0,
-    dot_flag = false;
+var canvas;
+var gl;
 
-var x = "black",
-    y = 2;
+var draw_pen_width = 1;
+var points = [];
 
 function init() {
-    canvas = document.getElementById('can');
-    ctx = canvas.getContext("2d");
-    w = canvas.width;
-    h = canvas.height;
+    canvas = document.getElementById( "gl-canvas" );
+    gl = WebGLUtils.setupWebGL( canvas );
+    if ( !gl ) { alert( "WebGL isn't available" ); }
+    
+    //
+    //  Configure WebGL
+    //
+    gl.viewport( 0, 0, canvas.width, canvas.height );
+    gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
 
+    //  Load shaders and initialize attribute buffers
+
+    var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    gl.useProgram( program );
+
+    document.getElementById("pen_width").onchange = function(event) {
+        draw_pen_width = parseInt(event.target.value);
+    };
+    
     canvas.addEventListener("mousemove", function (e) {
         findxy('move', e)
     }, false);
