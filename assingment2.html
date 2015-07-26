@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://webgl-allblue.rhcloud.com/2/assignment2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Masahiro’ｓ WebGL Assignments</title>
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+attribute vec4 vColor;
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_Position = vPosition;
+    fColor = vColor;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 fColor;
+
+void
+main()
+{
+//    gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="./assingment2_files/webgl-utils.js"></script>
+<script type="text/javascript" src="./assingment2_files/initShaders.js"></script>
+<script type="text/javascript" src="./assingment2_files/MV.js"></script>
+<script type="text/javascript" src="./assingment2_files/assignment2.js"></script>
+</head>
+
+<body>
+<h1>Masahiro (allblue)'s WebGL Assignment</h1>
+<h2>Assignment2 -- Drawing with Mouse</h2>
+<div>
+  <select id="ui_color" class="control">
+	<option value="0" selected="selected">Black</option>
+	<option value="1">Red</option>
+	<option value="3">Green</option>
+	<option value="4">Blue</option>
+  </select>
+  <select id="ui_width" class="control">
+	<option value="1.0">Thin</option>
+	<option value="5.0" selected="selected">Medium</option>
+	<option value="10.0">Thick</option>
+  </select>
+    <input type="button" id="ui_new" class="control" value="Clear"><br>
+</div>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+
+</body></html>
