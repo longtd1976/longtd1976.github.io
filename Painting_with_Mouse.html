@@ -1,56 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-<title>2D Triangle Twist</title>
-
-
-<script id="vertex-shader" type="x-shader/x-vertex">
-attribute vec4 vPosition;
-
-void
-main()
-{
-    gl_Position = vPosition;
-}
-</script>
-
-<script id="fragment-shader" type="x-shader/x-fragment">
-precision mediump float;
-
-void
-main()
-{
-    gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
-}
-</script>
-
-<script type="text/javascript" src="common/webgl-utils.js"></script>
-<script type="text/javascript" src="common/initShaders.js"></script>
-<script type="text/javascript" src="common/MV.js"></script>
-<script type="text/javascript" src="triangle_twist.js"></script>
-</head>   
-
-<body>
-<div>
-Recursive steps  0 <input id="slider" type="range"
- min="0" max="6" step="1" value="1" />
- 6
-</div>
-<div>
-Twist angles     0 <input id="rotator" type="range"
- min="0" max="360" step="1" value="0" />
- 360
-</div>
-<select id="shape_select">
-  <option value="Triangle">Triangle</option>
-  <option value="Square">Square</option>
-</select>
-<button id="outline" value="f" class="btn btn-sm">View As Wireframe</button>
-
-
-<canvas id="gl-canvas" width="512" height="512">
-Oops ... your browser doesn't support the HTML5 canvas element
-</canvas>
+  <script type="text/javascript" src="painting_with_mouse.js"></script>
+</head>
+<body onload="init()">
+    <canvas id="can" width="400" height="400" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
+    <div style="position:absolute;top:12%;left:43%;">Choose Color</div>
+    <div style="position:absolute;top:15%;left:45%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
+    <div style="position:absolute;top:15%;left:46%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
+    <div style="position:absolute;top:15%;left:47%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
+    <div style="position:absolute;top:17%;left:45%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
+    <div style="position:absolute;top:17%;left:46%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
+    <div style="position:absolute;top:17%;left:47%;width:10px;height:10px;background:black;" id="black" onclick="color(this)"></div>
+    <div style="position:absolute;top:20%;left:43%;">Eraser</div>
+    <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+    <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+    <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:55%;left:10%;">
+    <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
 </body>
 </html>
