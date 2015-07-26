@@ -29,33 +29,30 @@
 </head>
 <body>
   <div>
+  <canvas id="gl-canvas" width="720" height="450" style="position:absolute;top:20%;left:10%;border:1px solid;cursor:crosshair;">
+  Oops ... your browser doesn't support the HTML5 canvas element
+  </canvas>
+  </div>
+  <div>
   Pen width 1 <input id="pen_width" type="range"
-   min="1" max="20" step="1" value="1" oninput="penWidthUpdate(value);"/>
-   <output id="pen_width_output">20</output>
-   <script>
-     function penWidthUpdate(val) {
-        document.getElementById("pen_width_output").setAttribute("value",val);
-     }
-   </script>
+   min="1" max="20" step="1" value="1" oninput="PenWidthUpdate(value)"/>
+   20
   </div>
   <div>
   Color Red 0 <input id="cl_red" type="range"
-   min="0" max="255" step="1" value="10" />
+   min="0" max="255" step="1" value="10" oninput="UpdateClRed(value)" />
    255
   </div>
   <div>
   Color Green 0 <input id="cl_green" type="range"
-   min="0" max="255" step="1" value="120" />
+   min="0" max="255" step="1" value="120" oninput="UpdateClGreen(value)" />
    255
   </div>
   <div>
   Color Blue 0 <input id="cl_blue" type="range"
-   min="0" max="255" step="1" value="200" />
+   min="0" max="255" step="1" value="200" oninput="UpdateClBlue(value)"/>
    255
   </div>
-  <input type="button" id="ui_new" class="control" value="Clear"></input><br />
-  <canvas id="gl-canvas" width="720" height="450" style="position:absolute;top:20%;left:10%;border:1px solid;">
-  Oops ... your browser doesn't support the HTML5 canvas element
-  </canvas>
+  <input type="button" id="clear_canvas" class="control" value="Clear"></input><br />
 </body>
 </html>

@@ -4,8 +4,8 @@ var canvas;
 var gl;
 var bufferId;
 
-var draw_pen_width = 1;
-var draw_color = 'blue';
+var draw_pen_width;
+var draw_color;
 var fColor;
 const black = vec4(0.0, 0.0, 0.0, 1.0);
 var index = 0;
@@ -14,9 +14,9 @@ var points = [];
 var IsDrawing = false;
 var Curr_p;
 var maxNumOfVertices = 10000;
-var clRed;
-var clGreen;
-var clBlue;
+var clRed = 100;
+var clGreen = 100;
+var clBlue = 100;
 
 function segment(points,color){
   this.points=points;      
@@ -25,14 +25,8 @@ function segment(points,color){
 
 window.onload = function init() {
     canvas = document.getElementById( "gl-canvas" );
-    draw_pen_width = document.getElementById("pen_width");
-    clRed = document.getElementById("cl_red");
-    clGreen = document.getElementById("cl_green");
-    clBlue = document.getElementById("cl_blue");
-    
-    draw_pen_width.onchange = function(event) {
-      gl.lineWidth(Number(draw_pen_width.value));    
-    };
+    var clrCmd = document.getElementById("clear_canvas");
+    clrCmd.onclick = ClearCanvas;
     canvas.addEventListener("mousedown",OnMousePressed);
     canvas.addEventListener("mouseup",OnMouseReleased);
     canvas.addEventListener("mousemove",OnMouseMove);
@@ -96,9 +90,26 @@ function OnMousePressed(event){
  
 }
 
-  function toCanvasCoord(event) {
-    return vec2(-1 + 2 * event.clientX / canvas.width, -1 + 2 * (canvas.height - event.clientY) / canvas.height);
-  }
+function toCanvasCoord(event) {
+  return vec2(-1 + 2 * event.clientX / canvas.width, -1 + 2 * (canvas.height - event.clientY) / canvas.height);
+}
+     
+function ClearCanvas() {
+  gl.clear( gl.COLOR_BUFFER_BIT );
+  points.length = 0;
+}
+function PenWidthUpdate(value){
+  draw_pen_width=value;  
+}
+function UpdateClRed(value){
+  clRed=value;
+}
+function UpdateClGreen(value){
+  clGreen=value;
+}
+function UpdateClBlue(value){
+  clBlue=value;  
+}
 
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
